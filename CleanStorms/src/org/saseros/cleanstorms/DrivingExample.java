@@ -10,7 +10,7 @@ public class DrivingExample {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
-		System.out.println("Hello, World!");
+		System.out.println("Hello, Cleanstormers");
 		
 		Motor.A.setSpeed(Motor.A.getMaxSpeed());
 		Motor.B.setSpeed(Motor.A.getMaxSpeed());
