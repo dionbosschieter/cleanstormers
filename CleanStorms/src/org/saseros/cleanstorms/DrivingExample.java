@@ -22,6 +22,8 @@ public class DrivingExample {
 		
 		Motor.B.stop();
 		Motor.A.stop();
+		
+		//test
 	}
 
 }
