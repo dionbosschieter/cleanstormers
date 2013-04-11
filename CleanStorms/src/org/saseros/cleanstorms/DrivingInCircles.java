@@ -14,7 +14,7 @@ public class DrivingInCircles {
 		LCD.drawString("Program 1", 0,0);
 		Button.waitForAnyPress();
 		LCD.clear();
-		double maxSpeed = Motor.A.getMaxSpeed();
+
 		Motor.A.setSpeed(Motor.A.getMaxSpeed());
 		Motor.B.setSpeed(Motor.A.getMaxSpeed());
 		//FORWARD
