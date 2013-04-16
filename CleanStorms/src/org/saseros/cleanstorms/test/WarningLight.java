@@ -3,7 +3,7 @@ package org.saseros.cleanstorms.test;
 import lejos.nxt.SensorPort;
 
 public class WarningLight implements Runnable {
-
+	
 	private int seconds;
 	
 	WarningLight(int countseconds) {
