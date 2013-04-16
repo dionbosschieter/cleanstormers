@@ -8,7 +8,7 @@ import org.saseros.cleanstorms.Sensor;
 public class Robot {
 
 	private Sensor sensor;
-	private int turn = -5;
+	private int turn = -15;
 
 	public Robot(Sensor sensor) {
 		this.sensor = sensor;
@@ -21,7 +21,7 @@ public class Robot {
 		Motor.B.rotate(turn);
 		System.out.println("Surveying");
 		if (Motor.B.getTachoCount() <= -70) {
-			turn = +5;
+			turn = +15;
 			return isPathClear();
 		} else if (Motor.B.getTachoCount() >= 70) {
 			System.out.println("Done Surveying!");
