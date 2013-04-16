@@ -1,7 +1,5 @@
 package org.saseros.cleanstorms.test;
 
-import javax.microedition.sensor.LightSensorInfo;
-import javax.microedition.sensor.TouchSensorInfo;
 import lejos.nxt.*;
 
 public class SystemCheck {
@@ -11,25 +9,23 @@ public class SystemCheck {
 	 * @throws InterruptedException 
 	 */
 	
-	public static void main(String[] args) throws InterruptedException {
+	public void enginecheck() {
 		
+	}
+	
+	public void sensorcheck() {
 		//defining and initializing all of the sensorinfo's
 		I2CSensor infoUltrasonic = new I2CSensor(SensorPort.S1);
-		TouchSensorInfo infoTouch = new TouchSensorInfo();
-		LightSensorInfo infoInputLight = new LightSensorInfo();
+		TouchSensor t = new TouchSensor(SensorPort.S2);
+		LightSensor ls = new LightSensor(SensorPort.S3);
 		
-		infoTouch.setPortNumber(SensorPort.S2.getId());
-		infoInputLight.setPortNumber(SensorPort.S3.getId());
+		if(infoUltrasonic.getData(0, null, 0) != 0)
+			Alarm.createAlarm("UltraSonic sensor not connected!");
 		
-		while(true){
-			Thread.sleep(2000);
-			
-			if(infoUltrasonic.getData(0, null, 0) != 0)
-				Alarm.createAlarm("UltraSonic sensor not connected!");
-			if(!infoTouch.isAvailable())
-				Alarm.createAlarm("Touch sensor not connected!");
-			if(!infoInputLight.isAvailable())
-				Alarm.createAlarm("Touch sensor not connected!");
-		}
+		//this does'nt work, use user interaction
+		if(t.isPressed())
+			Alarm.createAlarm("Touch sensor not connected!");
+		if(ls.readNormalizedValue() != 0)
+			Alarm.createAlarm("Touch sensor not connected!");
 	}
 }
