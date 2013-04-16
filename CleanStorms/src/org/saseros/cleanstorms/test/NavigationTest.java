@@ -1,5 +1,8 @@
 package org.saseros.cleanstorms.test;
 
+import org.saseros.cleanstorms.Robot;
+import org.saseros.cleanstorms.Sensor;
+
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
@@ -33,6 +36,9 @@ public class NavigationTest {
 		Navigator c = new Navigator(p);
 		c.getPoseProvider().getPose().setLocation(0, 0);
 		
+		Sensor sensor = new Sensor(true, 50, 30);
+		Robot robot = new Robot(sensor);
+		
 		
 		
 		
@@ -42,14 +48,24 @@ public class NavigationTest {
 		while(true){
 			p.forward();
 			
-			System.out.println("X: " + c.getPoseProvider().getPose().getX() + " - Y: " + c.getPoseProvider().getPose().getY());
-			
 			while(p.isMoving()){
-				int lastDistance = uss.getDistance();
+				int lastDistance = uss.getDistance();				
+				
+				/* Limit the area to 3m2 */
+				if(c.getPoseProvider().getPose().getX() > 150 || c.getPoseProvider().getPose().getX()  < -150 || c.getPoseProvider().getPose().getY() > 150 || c.getPoseProvider().getPose().getX() < -150){
+					p.arc(10, 180);
+					p.forward();
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				}				
 
 				if (bump.isPressed()){
 					// Move backward routine
-					p.stop();
 					
 					p.backward();
 					try {
@@ -60,7 +76,7 @@ public class NavigationTest {
 					}
 					
 					p.rotate(90 + (int)(Math.random() * ((180 - 90) + 1)));
-					p.setTravelSpeed(p.getMaxTravelSpeed());
+					p.forward();
 					break;
 					
 				}
@@ -68,19 +84,12 @@ public class NavigationTest {
 				if(lastDistance < 60){
 					
 					p.arc(20, 90 + (int)(Math.random() * ((180 - 90) + 1)));
+					p.forward();
 					
-					break;
-				}
-				
-				/* Limit the area */
-				
-				if(c.getPoseProvider().getPose().getX() > 500){
-					p.stop();
-				}
-				if(c.getPoseProvider().getPose().getY() > 500){
-					p.stop();
-				}
-				
+//					if(robot.isPathClear()){
+//						break;
+//					}
+				}		
 				
 			}
 		}
