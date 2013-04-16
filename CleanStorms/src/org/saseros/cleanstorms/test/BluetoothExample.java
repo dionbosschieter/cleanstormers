@@ -27,6 +27,7 @@ public class BluetoothExample {
 		System.out.println("Connected");
 		Thread.sleep(2000);
 		System.out.println(bt.getSignalStrength());
+		
 	}
 
 }
