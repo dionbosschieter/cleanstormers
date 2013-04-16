@@ -1,4 +1,4 @@
-package org.saseros.cleanstorms;
+package org.saseros.cleanstorms.test;
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.Motor;
