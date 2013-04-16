@@ -9,6 +9,7 @@ public class WarningLight implements Runnable {
 	WarningLight(int countseconds) {
 		this.seconds = countseconds;
 	}
+	
 	public void run() {
 		while(true) {
 			SensorPort.S4.setPowerType(2);
