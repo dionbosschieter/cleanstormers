@@ -14,7 +14,8 @@ public class Sensor {
 	private int reactionDistanceHori;
 	private int reactionDistanceVerti;
 
-	public Sensor(boolean floodlightOn, int reactionDistanceHori, int reactionDistanceVerti) {
+	public Sensor(boolean floodlightOn, int reactionDistanceHori,
+			int reactionDistanceVerti) {
 		this.uss = new UltrasonicSensor(SensorPort.S1);
 		this.ts = new TouchSensor(SensorPort.S2);
 		this.ls = new LightSensor(SensorPort.S3, floodlightOn);
@@ -56,7 +57,7 @@ public class Sensor {
 	public static void main(String[] args) throws InterruptedException {
 		Sensor sensor = new Sensor(true, 20, 30);
 		while (!Button.ESCAPE.isDown()) {
-			//Insert testing code here
+			// Insert testing code here
 		}
 	}
 }
