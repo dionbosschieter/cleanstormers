@@ -1,15 +1,15 @@
-package org.saseros.cleanstorms;
+package org.saseros.cleanstorms.test;
 
 import lejos.nxt.*;
 
-public class BatteryVoltage {
+public class HelloWorld {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(Battery.getVoltage());
+		System.out.println("Hello, World!");
 		Button.waitForAnyPress();
 	}
 
