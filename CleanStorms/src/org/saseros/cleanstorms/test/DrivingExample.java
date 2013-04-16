@@ -1,4 +1,4 @@
-package org.saseros.cleanstorms;
+package org.saseros.cleanstorms.test;
 
 import lejos.nxt.*;
 
@@ -23,6 +23,7 @@ public class DrivingExample {
 		Motor.B.stop();
 		Motor.A.stop();
 		
+		//test
 	}
 
 }
