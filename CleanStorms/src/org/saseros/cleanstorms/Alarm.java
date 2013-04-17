@@ -1,4 +1,4 @@
-package org.saseros.cleanstorms.test;
+package org.saseros.cleanstorms;
 
 import lejos.nxt.*;
 
@@ -16,6 +16,11 @@ public class Alarm {
 		playAlarm();
 		Button.waitForAnyPress();
 		
+	}
+	public static void showMessage(String error) {
+		LCD.clear();
+		System.out.println(error);
+		Button.waitForAnyPress();
 	}
 	
 	public static void playAlarm() {

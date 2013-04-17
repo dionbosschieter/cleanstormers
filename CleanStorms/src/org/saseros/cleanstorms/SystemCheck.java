@@ -1,4 +1,4 @@
-package org.saseros.cleanstorms.test;
+package org.saseros.cleanstorms;
 
 import lejos.nxt.*;
 
@@ -86,20 +86,20 @@ public class SystemCheck {
 		TouchSensor t = new TouchSensor(SensorPort.S2);
 		LightSensor ls = new LightSensor(SensorPort.S3);
 		
-		if(checkSensor(us)) 
+		if(!checkSensor(us)) 
 			Alarm.createAlarmHard("UltraSonic sensor not Connected");
 		
 		//give an message to the user, to preform some sensor tests
-		LCD.clear();
-		System.out.println("Please touch the Touchsensor and hold" +
-				" your hand for the Lightsensor");
-		Button.waitForAnyPress();
+		Alarm.showMessage("Please push the Touchsensor and hold" +
+				" hold that while you pressed the Orange button.");
 		
-		if(checkSensor(t))
+		if(!checkSensor(t))
 			Alarm.createAlarmHard("Touch Sensor not connected!");
-		if(checkSensor(ls))
+		if(!checkSensor(ls))
 			Alarm.createAlarmHard("Light Sensor not connected!");
 		
+		Alarm.showMessage("You can now release the Touch sensor" +
+				" and pres the orange button again.");
 	}
 	
 	/**
