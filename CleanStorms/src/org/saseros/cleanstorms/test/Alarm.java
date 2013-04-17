@@ -6,21 +6,21 @@ public class Alarm {
 
 	public static void createAlarmSoft(String error) {
 		LCD.clear();
-		LCD.drawString(error, 0, 0);
+		System.out.println(error);
 		playBeep();
 	}
 	
 	public static void createAlarmHard(String error) {
 		LCD.clear();
-		LCD.drawString(error, 0, 0);
+		System.out.println(error);
 		playAlarm();
+		Button.waitForAnyPress();
 		
 	}
 	
 	public static void playAlarm() {
 		Sound.setVolume(Sound.VOL_MAX);
 		Sound.systemSound(true, 3);
-		Button.waitForAnyPress();
 	}
 	
 	public static void playBeep(){
