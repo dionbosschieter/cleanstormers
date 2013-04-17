@@ -1,15 +1,31 @@
 package org.saseros.cleanstorms;
 
+import java.util.Random;
+
 import lejos.nxt.Button;
 import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+import lejos.robotics.navigation.DifferentialPilot;
+import lejos.robotics.navigation.Navigator;
+import lejos.robotics.objectdetection.Feature;
+import lejos.robotics.objectdetection.FeatureDetector;
+import lejos.robotics.objectdetection.FeatureListener;
+import lejos.robotics.objectdetection.RangeFeatureDetector;
 
 import org.saseros.cleanstorms.Sensor;
 
-public class Robot {
+public class Robot implements FeatureListener {
 
 	private Sensor sensor;
+	private DifferentialPilot pilot;
+	private Navigator navigator;
+	private RangeFeatureDetector fd;
+	private Random random;
+
 	private int turn = -15;
 	private int recursiveDepth = 0;
+
+	private final int RESPONSE_TIME_ULTRASONIC = 700;
 
 	/**
 	 * The constructor sets the sensors used by this class for
@@ -19,8 +35,17 @@ public class Robot {
 	 *            An object of the class Sensor must be put in to initiate a
 	 *            Robot-object
 	 */
-	public Robot(Sensor sensor) {
+	public Robot(Sensor sensor, DifferentialPilot pilot, Navigator navigator) {
 		this.sensor = sensor;
+		this.pilot = pilot;
+		this.navigator = navigator;
+		this.fd = new RangeFeatureDetector(sensor.getUltrasonicSensor(),
+				sensor.getReactonDistanceHori(), RESPONSE_TIME_ULTRASONIC);
+		this.fd.addListener(this);
+		this.random = new Random();
+
+		pilot.setMinRadius(15); // Radius for turns
+
 	}
 
 	/**
@@ -29,6 +54,7 @@ public class Robot {
 	 * locks on to that obstacle until it moves, or recursive depth reaches
 	 * maximum value(246), if no object is detected it will return true.
 	 * 
+	 * @deprecated
 	 * @return Returns a boolean-value, false, to indicate that the path is not
 	 *         clear, or true, to indicate the path is ready to go.
 	 */
@@ -76,20 +102,55 @@ public class Robot {
 	}
 
 	/**
+	 * @return the pilot
+	 */
+	public DifferentialPilot getPilot() {
+		return pilot;
+	}
+
+	/**
+	 * @return the navigator
+	 */
+	public Navigator getNavigator() {
+		return navigator;
+	}
+
+	/**
+	 * @return the sensor
+	 */
+	public Sensor getSensor() {
+		return sensor;
+	}
+
+	@Override
+	public void featureDetected(Feature feature, FeatureDetector detector) {
+		this.getPilot().arc(generateRadius(),
+				20 + (int) (Math.random() * ((90 - 20) + 1)));
+	}
+
+	private double generateRadius() {
+		if (random.nextBoolean()) {
+			return 15.0;
+		} else {
+			return -15.0;
+		}
+	}
+
+	/**
 	 * For testing purposes only.
 	 * 
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		Sensor sensor = new Sensor(true, 20, 30);
-		Robot robot = new Robot(sensor);
-		System.out.println("Method returns: " + robot.isPathClear());
-		// robot.isPathClear();
-		Button.waitForAnyPress();
-		// while(!Button.ESCAPE.isDown()){
-
-		// }
-
-	}
+	// public static void main(String[] args) {
+	// Sensor sensor = new Sensor(true, 20, 30);
+	// Robot robot = new Robot(sensor);
+	// System.out.println("Method returns: " + robot.isPathClear());
+	// // robot.isPathClear();
+	// Button.waitForAnyPress();
+	// // while(!Button.ESCAPE.isDown()){
+	//
+	// // }
+	//
+	// }
 
 }
