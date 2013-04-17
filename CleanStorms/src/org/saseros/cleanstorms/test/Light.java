@@ -1,5 +1,5 @@
 package org.saseros.cleanstorms.test;
-//import org.saseros.cleanstorms.Alarm;
+import org.saseros.cleanstorms.Alarm;
 
 import lejos.nxt.*;
 
