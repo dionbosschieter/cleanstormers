@@ -5,8 +5,13 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
-import lejos.robotics.RangeFinder;
 
+/**
+ * This class is for simple handling with the sensors.
+ * 
+ * @author Pers
+ * 
+ */
 public class Sensor {
 
 	private UltrasonicSensor uss;
@@ -33,6 +38,33 @@ public class Sensor {
 		this.ls = new LightSensor(SensorPort.S3, floodlightOn);
 		this.reactionDistanceHori = reactionDistanceHori;
 		this.reactionDistanceVerti = reactionDistanceVerti;
+	}
+
+	/**
+	 * Method for fetching the UltrasonicSensor
+	 * 
+	 * @return Returns the UltrasonicSensor
+	 */
+	public UltrasonicSensor getUltrasonicSensor() {
+		return uss;
+	}
+
+	/**
+	 * Method for fetching the horizontal reaction distance
+	 * 
+	 * @return Returns the horizontal reaction distance
+	 */
+	public int getReactonDistanceHori() {
+		return reactionDistanceHori;
+	}
+
+	/**
+	 * Method for fetching the TouchSensor
+	 * 
+	 * @return Returns the TouchSensor
+	 */
+	public TouchSensor getTouchSensor() {
+		return ts;
 	}
 
 	/**
@@ -90,17 +122,5 @@ public class Sensor {
 		while (!Button.ESCAPE.isDown()) {
 			// Insert testing code here
 		}
-	}
-
-	public UltrasonicSensor getUltrasonicSensor() {
-		return uss;
-	}
-
-	public int getReactonDistanceHori() {
-		return reactionDistanceHori;
-	}
-
-	public TouchSensor getTouchSensor() {
-		return ts;
 	}
 }
