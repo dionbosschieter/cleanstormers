@@ -11,15 +11,17 @@ import lejos.robotics.objectdetection.Feature;
 import lejos.robotics.objectdetection.FeatureDetector;
 import lejos.robotics.objectdetection.FeatureListener;
 import lejos.robotics.objectdetection.RangeFeatureDetector;
+import lejos.robotics.objectdetection.TouchFeatureDetector;
 
 import org.saseros.cleanstorms.Sensor;
 
-public class Robot implements FeatureListener {
+public class Robot {
 
 	private Sensor sensor;
 	private DifferentialPilot pilot;
 	private Navigator navigator;
 	private RangeFeatureDetector fd;
+	private TouchFeatureDetector tfd;
 	private Random random;
 
 	private int turn = -15;
@@ -40,8 +42,10 @@ public class Robot implements FeatureListener {
 		this.pilot = pilot;
 		this.navigator = navigator;
 		this.fd = new RangeFeatureDetector(sensor.getUltrasonicSensor(),
-				sensor.getReactonDistanceHori(), RESPONSE_TIME_ULTRASONIC);
-		this.fd.addListener(this);
+				-sensor.getReactonDistanceHori(), RESPONSE_TIME_ULTRASONIC);
+		addUltrasonicListener();
+		this.tfd = new TouchFeatureDetector(sensor.getTouchSensor());
+		addTouchSensorListener();
 		this.random = new Random();
 
 		pilot.setMinRadius(15); // Radius for turns
@@ -122,10 +126,30 @@ public class Robot implements FeatureListener {
 		return sensor;
 	}
 
-	@Override
-	public void featureDetected(Feature feature, FeatureDetector detector) {
+	private void handleOnUltrasonicDetection(Feature feature,
+			FeatureDetector detector) {
 		this.getPilot().arc(generateRadius(),
 				20 + (int) (Math.random() * ((90 - 20) + 1)));
+	}
+
+	private void addUltrasonicListener() {
+		this.fd.addListener(new FeatureListener() {
+			@Override
+			public void featureDetected(Feature feature,
+					FeatureDetector detector) {
+				handleOnUltrasonicDetection(feature, detector);
+			}
+		});
+	}
+
+	private void addTouchSensorListener() {
+		this.tfd.addListener(new FeatureListener() {
+			@Override
+			public void featureDetected(Feature feature,
+					FeatureDetector detector) {
+				// Add code here
+			}
+		});
 	}
 
 	private double generateRadius() {
