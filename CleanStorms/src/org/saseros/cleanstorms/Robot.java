@@ -2,12 +2,18 @@ package org.saseros.cleanstorms;
 
 import lejos.nxt.Button;
 import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+import lejos.robotics.navigation.DifferentialPilot;
+import lejos.robotics.navigation.Navigator;
 
 import org.saseros.cleanstorms.Sensor;
 
 public class Robot {
 
 	private Sensor sensor;
+	private DifferentialPilot pilot;
+	private Navigator navigator;
+
 	private int turn = -15;
 	private int recursiveDepth = 0;
 
@@ -19,8 +25,13 @@ public class Robot {
 	 *            An object of the class Sensor must be put in to initiate a
 	 *            Robot-object
 	 */
-	public Robot(Sensor sensor) {
+	public Robot(Sensor sensor, DifferentialPilot pilot, Navigator navigator) {
 		this.sensor = sensor;
+		this.pilot = pilot;
+		this.navigator = navigator;
+
+		pilot.setMinRadius(15); // Radius for turns
+
 	}
 
 	/**
@@ -76,20 +87,43 @@ public class Robot {
 	}
 
 	/**
+	 * @return the pilot
+	 */
+	public DifferentialPilot getPilot() {
+		return pilot;
+	}
+
+	/**
+	 * @return the navigator
+	 */
+	public Navigator getNavigator() {
+		return navigator;
+	}
+
+	/**
+	 * @return the sensor
+	 */
+	public Sensor getSensor() {
+		return sensor;
+	}
+	
+	
+
+	/**
 	 * For testing purposes only.
 	 * 
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		Sensor sensor = new Sensor(true, 20, 30);
-		Robot robot = new Robot(sensor);
-		System.out.println("Method returns: " + robot.isPathClear());
-		// robot.isPathClear();
-		Button.waitForAnyPress();
-		// while(!Button.ESCAPE.isDown()){
-
-		// }
-
-	}
+	// public static void main(String[] args) {
+	// Sensor sensor = new Sensor(true, 20, 30);
+	// Robot robot = new Robot(sensor);
+	// System.out.println("Method returns: " + robot.isPathClear());
+	// // robot.isPathClear();
+	// Button.waitForAnyPress();
+	// // while(!Button.ESCAPE.isDown()){
+	//
+	// // }
+	//
+	// }
 
 }
