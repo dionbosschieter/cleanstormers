@@ -20,11 +20,11 @@ public class SystemCheck {
 	
 	public void enginesCheck() {
 		if(motorCheck(Motor.A))
-			Alarm.createAlarm("UltraSonic sensor not connected!");
+			Alarm.createAlarmHard("UltraSonic sensor not connected!");
 		if(motorCheck(Motor.B))
-			Alarm.createAlarm("UltraSonic sensor not connected!");
+			Alarm.createAlarmHard("UltraSonic sensor not connected!");
 		if(motorCheck(Motor.C))
-			Alarm.createAlarm("UltraSonic sensor not connected!");
+			Alarm.createAlarmHard("UltraSonic sensor not connected!");
 	}
 	
 	public void sensorCheck() {
@@ -34,12 +34,12 @@ public class SystemCheck {
 		LightSensor ls = new LightSensor(SensorPort.S3);
 		
 		if(infoUltrasonic.getData(0, null, 0) != 0)
-			Alarm.createAlarm("UltraSonic sensor not connected!");
+			Alarm.createAlarmHard("UltraSonic sensor not connected!");
 		
 		//this does'nt work, use user interaction
 		if(t.isPressed())
-			Alarm.createAlarm("Touch sensor not connected!");
+			Alarm.createAlarmHard("Touch sensor not connected!");
 		if(ls.readNormalizedValue() != 0)
-			Alarm.createAlarm("Touch sensor not connected!");
+			Alarm.createAlarmHard("Touch sensor not connected!");
 	}
 }
