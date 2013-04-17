@@ -1,11 +1,13 @@
 package org.saseros.cleanstorms;
 
 import lejos.nxt.I2CSensor;
+import lejos.robotics.subsumption.Behavior;
 
 public class UltraSonicCheck implements Runnable {
 	
 	private I2CSensor us;
 	private int seconds;
+	private float LOW_LEVEL;
 	
 	/**
 	 * Constructor for initializing the private variables 
@@ -13,9 +15,10 @@ public class UltraSonicCheck implements Runnable {
 	 * @param us
 	 * @param seconds
 	 */
-	UltraSonicCheck(I2CSensor us, int seconds) {
+	UltraSonicCheck(I2CSensor us, int seconds, float lowlevel) {
 		this.us = us;
 		this.seconds = seconds;
+		this.LOW_LEVEL = lowlevel;
 	}
 	
 	/**
