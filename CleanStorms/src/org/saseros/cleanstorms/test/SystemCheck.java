@@ -4,16 +4,30 @@ import lejos.nxt.*;
 
 public class SystemCheck {
 
-	/**
-	 * @param args
-	 * @throws InterruptedException 
-	 */
-	
-	public void enginecheck() {
-		
+	public static boolean motorCheck(NXTRegulatedMotor m) {
+		int pos = m.getPosition();
+		m.rotate(180);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (m.getPosition() == pos) return false;
+		m.rotate(pos);
+		return true;
 	}
 	
-	public void sensorcheck() {
+	public void enginesCheck() {
+		if(motorCheck(Motor.A))
+			Alarm.createAlarm("UltraSonic sensor not connected!");
+		if(motorCheck(Motor.B))
+			Alarm.createAlarm("UltraSonic sensor not connected!");
+		if(motorCheck(Motor.C))
+			Alarm.createAlarm("UltraSonic sensor not connected!");
+	}
+	
+	public void sensorCheck() {
 		//defining and initializing all of the sensorinfo's
 		I2CSensor infoUltrasonic = new I2CSensor(SensorPort.S1);
 		TouchSensor t = new TouchSensor(SensorPort.S2);
