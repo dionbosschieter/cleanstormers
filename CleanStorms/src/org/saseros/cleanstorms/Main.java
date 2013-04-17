@@ -20,7 +20,7 @@ public class Main {
 			while (robot.getPilot().isMoving()) {
 
 				/* Limit the area to 3m2 */
-				if (robot.getNavigator().getPoseProvider().getPose().getX() > 150
+				/*if (robot.getNavigator().getPoseProvider().getPose().getX() > 150
 						|| robot.getNavigator().getPoseProvider().getPose()
 								.getX() < -150
 						|| robot.getNavigator().getPoseProvider().getPose()
@@ -36,7 +36,7 @@ public class Main {
 						e.printStackTrace();
 					}
 					break;
-				}
+				}*/
 
 				if (robot.getSensor().isBumpDetected()) {
 					// Move backward routine
@@ -54,10 +54,7 @@ public class Main {
 
 				}
 
-				if (robot.getSensor().isObstacleDetected()) {
-					robot.getPilot().arc(15,
-							90 + (int) (Math.random() * ((180 - 90) + 1)));
-				}
+
 
 			}
 		}

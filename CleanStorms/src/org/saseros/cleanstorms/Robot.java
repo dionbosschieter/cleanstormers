@@ -22,7 +22,7 @@ public class Robot implements FeatureListener {
 	private int turn = -15;
 	private int recursiveDepth = 0;
 	
-	private final int RESPONSE_TIME_ULTRASONIC = 500;
+	private final int RESPONSE_TIME_ULTRASONIC = 700;
 
 	/**
 	 * The constructor sets the sensors used by this class for
@@ -121,7 +121,8 @@ public class Robot implements FeatureListener {
 
 	@Override
 	public void featureDetected(Feature feature, FeatureDetector detector) {
-		
+			this.getPilot().arc(15,
+					20 + (int) (Math.random() * ((90 - 20) + 1)));
 	}
 	
 	
