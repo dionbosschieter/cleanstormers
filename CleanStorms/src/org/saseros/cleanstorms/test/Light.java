@@ -25,11 +25,16 @@ public class Light {
 				e.printStackTrace();
 			}
 			Alarm.playBeep();
-			
+			int y = floorCheck(floorLight);
 			LCD.clear();
-			//LCD.drawString("Floor value:", 0, 0);
 			LCD.drawInt(floorLight, 0, 0);
 			LCD.drawInt(floorLightRaw, 0, 1);
+			if(y == 1){
+				LCD.drawString("on floor", 0, 2);
+			}
+			else {
+				LCD.drawString("not on floor", 0, 2);
+			}
 			Button.waitForAnyPress();
 		}
 
@@ -42,16 +47,38 @@ public class Light {
 				e.printStackTrace();
 			}
 			Alarm.playBeep();
+			int x = lineCheck(lineLight);
 			LCD.clear();
-			//System.out.println("Line value");
 			LCD.drawInt(lineLight, 0, 0);
 			LCD.drawInt(lineLightRaw, 0, 1);
+			if(x == 1){
+				LCD.drawString("on line", 0, 2);
+			}
+			else {
+				LCD.drawString("not on line", 0, 2);
+			}
+			
 			Button.waitForAnyPress();
 		}
 		
-		public static int randomValue(){
-			int x = 
-			return x;
+		public static int floorCheck(int floorC){
+			if(floorC < floorC+1 && floorC > floorC-1){
+				return 1;
+			}
+			else{
+				return 0;
+			}
+			
+		}
+		
+		public static int lineCheck(int lineC){
+			if(lineC < lineC++ && lineC > lineC--){
+				return 1;
+			}
+			else{
+				return 0;
+			}
+			
 		}
 		
 	   public static int getCalibratedValue() { 
