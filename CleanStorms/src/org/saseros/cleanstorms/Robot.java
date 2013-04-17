@@ -2,9 +2,7 @@ package org.saseros.cleanstorms;
 
 import java.util.Random;
 
-import lejos.nxt.Button;
 import lejos.nxt.Motor;
-import lejos.nxt.SensorPort;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.navigation.Navigator;
 import lejos.robotics.objectdetection.Feature;
@@ -13,8 +11,13 @@ import lejos.robotics.objectdetection.FeatureListener;
 import lejos.robotics.objectdetection.RangeFeatureDetector;
 import lejos.robotics.objectdetection.TouchFeatureDetector;
 
-import org.saseros.cleanstorms.Sensor;
-
+/**
+ * This class is for handling the robot and various movements when the sensor
+ * reacts
+ * 
+ * @author Pers
+ * 
+ */
 public class Robot {
 
 	private Sensor sensor;
@@ -30,12 +33,14 @@ public class Robot {
 	private final int RESPONSE_TIME_ULTRASONIC = 700;
 
 	/**
-	 * The constructor sets the sensors used by this class for
-	 * movement-handling.
+	 * The constructor sets the sensors, events, and various variables used by
+	 * this class for movement-handling
 	 * 
 	 * @param sensor
 	 *            An object of the class Sensor must be put in to initiate a
 	 *            Robot-object
+	 * @param pilot
+	 * @param navigator
 	 */
 	public Robot(Sensor sensor, DifferentialPilot pilot, Navigator navigator) {
 		this.sensor = sensor;
@@ -126,12 +131,26 @@ public class Robot {
 		return sensor;
 	}
 
+	/**
+	 * In this method goes code that is suppeosed to executed when the
+	 * UltrasonicSensor detecs an obstacle
+	 * 
+	 * @param feature
+	 *            Default value that must be implemented, not really usedfor
+	 *            anything
+	 * @param detector
+	 *            Default value that must be implemented, not really usedfor
+	 *            anything
+	 */
 	private void handleOnUltrasonicDetection(Feature feature,
 			FeatureDetector detector) {
 		this.getPilot().arc(generateRadius(),
 				20 + (int) (Math.random() * ((90 - 20) + 1)));
 	}
 
+	/**
+	 * Used in the constructor to add an Event to the UltrasonicSensor
+	 */
 	private void addUltrasonicListener() {
 		this.fd.addListener(new FeatureListener() {
 			@Override
@@ -142,6 +161,10 @@ public class Robot {
 		});
 	}
 
+	/**
+	 * Used in the constructor to add an Event to the TouchSensor, might not be
+	 * implemented in the final product due to conflicts with threads
+	 */
 	private void addTouchSensorListener() {
 		this.tfd.addListener(new FeatureListener() {
 			@Override
@@ -152,6 +175,11 @@ public class Robot {
 		});
 	}
 
+	/**
+	 * A help-method to generate the radius the robot moves in by a coin-flip
+	 * 
+	 * @return 15.0 or -15.0 depending on the outcome of the coinflip
+	 */
 	private double generateRadius() {
 		if (random.nextBoolean()) {
 			return 15.0;
@@ -176,5 +204,4 @@ public class Robot {
 	// // }
 	//
 	// }
-
 }
