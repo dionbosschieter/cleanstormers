@@ -22,7 +22,7 @@ public class Robot implements FeatureListener {
 	private int turn = -15;
 	private int recursiveDepth = 0;
 	
-	private final int responseTimeUltrasonicSensor = 500;
+	private final int RESPONSE_TIME_ULTRASONIC = 500;
 
 	/**
 	 * The constructor sets the sensors used by this class for
@@ -37,7 +37,7 @@ public class Robot implements FeatureListener {
 		this.pilot = pilot;
 		this.navigator = navigator;
 		this.fd = new RangeFeatureDetector(sensor.getUltrasonicSensor(),
-				sensor.getReactonDistanceHori(), responseTimeUltrasonicSensor);
+				sensor.getReactonDistanceHori(), RESPONSE_TIME_ULTRASONIC);
 		this.fd.addListener(this);
 		
 		pilot.setMinRadius(15); // Radius for turns
@@ -51,6 +51,7 @@ public class Robot implements FeatureListener {
 	 * locks on to that obstacle until it moves, or recursive depth reaches
 	 * maximum value(246), if no object is detected it will return true.
 	 * 
+	 * @deprecated
 	 * @return Returns a boolean-value, false, to indicate that the path is not
 	 *         clear, or true, to indicate the path is ready to go.
 	 */
