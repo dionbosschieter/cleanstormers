@@ -25,16 +25,14 @@ public class Light {
 				e.printStackTrace();
 			}
 			Alarm.playBeep();
-			int y = floorCheck(floorLight);
+			boolean y = floorCheck(floorLight);
 			LCD.clear();
 			LCD.drawInt(floorLight, 0, 0);
 			LCD.drawInt(floorLightRaw, 0, 1);
-			if(y == 1){
+			if(y)
 				LCD.drawString("on floor", 0, 2);
-			}
-			else {
+			else
 				LCD.drawString("not on floor", 0, 2);
-			}
 			Button.waitForAnyPress();
 		}
 
@@ -61,14 +59,8 @@ public class Light {
 			Button.waitForAnyPress();
 		}
 		
-		public static int floorCheck(int floorC){
-			if(floorC < floorC+1 && floorC > floorC-1){
-				return 1;
-			}
-			else{
-				return 0;
-			}
-			
+		public static boolean floorCheck(int floorC){
+			return (floorC < floorC+1 && floorC > floorC-1);
 		}
 		
 		public static int lineCheck(int lineC){
