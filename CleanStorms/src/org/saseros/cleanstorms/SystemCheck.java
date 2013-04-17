@@ -61,7 +61,7 @@ public class SystemCheck {
 	 * @return	Returns true if the sensor is connected
  	 *			-5 means disconnected.
 	 */
-	private static boolean checkSensor(I2CSensor us) {
+	public static boolean checkSensor(I2CSensor us) {
 		return (us.getData(0, null, 0) != -5);
 	}	
 	
