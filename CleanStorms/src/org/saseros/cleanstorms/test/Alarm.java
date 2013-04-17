@@ -17,6 +17,11 @@ public class Alarm {
 		Button.waitForAnyPress();
 		
 	}
+	public static void showMessage(String error) {
+		LCD.clear();
+		System.out.println(error);
+		Button.waitForAnyPress();
+	}
 	
 	public static void playAlarm() {
 		Sound.setVolume(Sound.VOL_MAX);
