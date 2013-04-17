@@ -5,6 +5,7 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
+import lejos.robotics.RangeFinder;
 
 public class Sensor {
 
@@ -89,5 +90,13 @@ public class Sensor {
 		while (!Button.ESCAPE.isDown()) {
 			// Insert testing code here
 		}
+	}
+
+	public RangeFinder getUltrasonicSensor() {
+		return uss;
+	}
+
+	public int getReactonDistanceHori() {
+		return reactionDistanceHori;
 	}
 }

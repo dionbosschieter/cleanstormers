@@ -5,17 +5,24 @@ import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.navigation.Navigator;
+import lejos.robotics.objectdetection.Feature;
+import lejos.robotics.objectdetection.FeatureDetector;
+import lejos.robotics.objectdetection.FeatureListener;
+import lejos.robotics.objectdetection.RangeFeatureDetector;
 
 import org.saseros.cleanstorms.Sensor;
 
-public class Robot {
+public class Robot implements FeatureListener {
 
 	private Sensor sensor;
 	private DifferentialPilot pilot;
 	private Navigator navigator;
+	private RangeFeatureDetector fd;
 
 	private int turn = -15;
 	private int recursiveDepth = 0;
+	
+	private final int responseTimeUltrasonicSensor = 500;
 
 	/**
 	 * The constructor sets the sensors used by this class for
@@ -29,9 +36,13 @@ public class Robot {
 		this.sensor = sensor;
 		this.pilot = pilot;
 		this.navigator = navigator;
-
+		this.fd = new RangeFeatureDetector(sensor.getUltrasonicSensor(),
+				sensor.getReactonDistanceHori(), responseTimeUltrasonicSensor);
+		this.fd.addListener(this);
+		
 		pilot.setMinRadius(15); // Radius for turns
-
+		
+		
 	}
 
 	/**
@@ -105,6 +116,11 @@ public class Robot {
 	 */
 	public Sensor getSensor() {
 		return sensor;
+	}
+
+	@Override
+	public void featureDetected(Feature feature, FeatureDetector detector) {
+		
 	}
 	
 	
