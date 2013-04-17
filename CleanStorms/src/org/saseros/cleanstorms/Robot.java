@@ -1,5 +1,7 @@
 package org.saseros.cleanstorms;
 
+import java.util.Random;
+
 import lejos.nxt.Button;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
@@ -18,10 +20,11 @@ public class Robot implements FeatureListener {
 	private DifferentialPilot pilot;
 	private Navigator navigator;
 	private RangeFeatureDetector fd;
+	private Random random;
 
 	private int turn = -15;
 	private int recursiveDepth = 0;
-	
+
 	private final int RESPONSE_TIME_ULTRASONIC = 700;
 
 	/**
@@ -39,10 +42,10 @@ public class Robot implements FeatureListener {
 		this.fd = new RangeFeatureDetector(sensor.getUltrasonicSensor(),
 				sensor.getReactonDistanceHori(), RESPONSE_TIME_ULTRASONIC);
 		this.fd.addListener(this);
-		
+		this.random = new Random();
+
 		pilot.setMinRadius(15); // Radius for turns
-		
-		
+
 	}
 
 	/**
@@ -121,11 +124,17 @@ public class Robot implements FeatureListener {
 
 	@Override
 	public void featureDetected(Feature feature, FeatureDetector detector) {
-			this.getPilot().arc(15,
-					20 + (int) (Math.random() * ((90 - 20) + 1)));
+		this.getPilot().arc(generateRadius(),
+				20 + (int) (Math.random() * ((90 - 20) + 1)));
 	}
-	
-	
+
+	private double generateRadius() {
+		if (random.nextBoolean()) {
+			return 15.0;
+		} else {
+			return -15.0;
+		}
+	}
 
 	/**
 	 * For testing purposes only.
