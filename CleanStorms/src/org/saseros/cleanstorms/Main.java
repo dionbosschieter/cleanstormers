@@ -33,35 +33,12 @@ public class Main {
 
 			while (robot.getPilot().isMoving()) {
 
-				/* Limit the area to 3m2 */
-				/*
-				 * if (robot.getNavigator().getPoseProvider().getPose().getX() >
-				 * 150 || robot.getNavigator().getPoseProvider().getPose()
-				 * .getX() < -150 ||
-				 * robot.getNavigator().getPoseProvider().getPose() .getY() >
-				 * 150 || robot.getNavigator().getPoseProvider().getPose()
-				 * .getX() < -150) { robot.getPilot().arc(10, 180);
-				 * robot.getPilot().forward(); try { Thread.sleep(1000); } catch
-				 * (InterruptedException e) { // TODO Auto-generated catch block
-				 * e.printStackTrace(); } break; }
-				 */
-
-				if (robot.getSensor().isBumpDetected()) {
-					// Move backward routine
-					robot.getPilot().backward();
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					robot.getPilot().rotate(
-							90 + (int) (Math.random() * ((180 - 90) + 1)));
-					robot.getPilot().forward();
-					break;
-
-				}
+//				if (robot.getSensor().isBumpDetected()) {
+//					// Move backward routine
+//					robot.moveBackward();
+//					break;
+//
+//				}
 
 			}
 		}
