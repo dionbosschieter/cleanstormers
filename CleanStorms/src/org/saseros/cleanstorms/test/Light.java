@@ -8,29 +8,34 @@ public class Light {
 	static LightSensor lss = new LightSensor(SensorPort.S3);
 	
 	public static void main(String[] args) {
-		
-		lightReadFloor();
-		lightReadLine();		
-	
+		while(true){
+			lightReadFloor();
+			lightReadLine();
+			//break Button.waitForAnyPress();
+		}
 	}
 		
 
 		public static void lightReadFloor(){
-			int floorLight = SensorPort.S3.readValue();
+			int floorLight 		= lss.readValue();
+			int floorLightRaw 	= lss.getNormalizedLightValue();
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			Alarm.playBeep();
+			
 			LCD.clear();
-			LCD.drawString("Floor value:", 0, 0);
-			LCD.drawInt(floorLight, 0, 4);
+			//LCD.drawString("Floor value:", 0, 0);
+			LCD.drawInt(floorLight, 0, 0);
+			LCD.drawInt(floorLightRaw, 0, 1);
 			Button.waitForAnyPress();
 		}
 
 		public static void lightReadLine(){
-			int lineLight = lss.getNormalizedLightValue();
+			int lineLight = SensorPort.S3.readValue();
+			int lineLightRaw 	= lss.getNormalizedLightValue();
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -38,9 +43,15 @@ public class Light {
 			}
 			Alarm.playBeep();
 			LCD.clear();
-			System.out.println("Line value");
-			LCD.drawInt(lineLight, 0, 8);
+			//System.out.println("Line value");
+			LCD.drawInt(lineLight, 0, 0);
+			LCD.drawInt(lineLightRaw, 0, 1);
 			Button.waitForAnyPress();
+		}
+		
+		public static int randomValue(){
+			int x = 
+			return x;
 		}
 		
 	   public static int getCalibratedValue() { 
