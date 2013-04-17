@@ -26,6 +26,7 @@ public class Robot {
 	private RangeFeatureDetector fd;
 	private TouchFeatureDetector tfd;
 	private Random random;
+	private Alarm alarm;
 
 	private int turn = -15;
 	private int recursiveDepth = 0;
@@ -47,14 +48,41 @@ public class Robot {
 		this.pilot = pilot;
 		this.navigator = navigator;
 		this.fd = new RangeFeatureDetector(sensor.getUltrasonicSensor(),
-				-sensor.getReactonDistanceHori(), RESPONSE_TIME_ULTRASONIC);
+				sensor.getReactonDistanceHori(), RESPONSE_TIME_ULTRASONIC);
 		addUltrasonicListener();
 		this.tfd = new TouchFeatureDetector(sensor.getTouchSensor());
 		addTouchSensorListener();
 		this.random = new Random();
+		
+		this.alarm = new Alarm();
 
 		pilot.setMinRadius(15); // Radius for turns
 
+	}
+	
+	public boolean moveBackward(){
+		
+		alarm.playBeep();
+		
+		this.getPilot().backward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		this.getPilot().rotate(
+				90 + (int) (Math.random() * ((180 - 90) + 1)));
+		this.getPilot().forward();
+		
+		return true;
+	}
+	
+	public boolean turn(){
+		this.getPilot().arc(15,
+				20 + (int) (Math.random() * ((90 - 20) + 1)));
+		return true;
 	}
 
 	/**
@@ -142,11 +170,10 @@ public class Robot {
 	 *            Default value that must be implemented, not really usedfor
 	 *            anything
 	 */
-	private void handleOnUltrasonicDetection(Feature feature,
-			FeatureDetector detector) {
-		this.getPilot().arc(generateRadius(),
-				20 + (int) (Math.random() * ((90 - 20) + 1)));
-	}
+//	private void handleOnUltrasonicDetection(Feature feature,
+//			FeatureDetector detector) {
+//		System.out.println("It works!");
+//	}
 
 	/**
 	 * Used in the constructor to add an Event to the UltrasonicSensor
@@ -156,7 +183,7 @@ public class Robot {
 			@Override
 			public void featureDetected(Feature feature,
 					FeatureDetector detector) {
-				handleOnUltrasonicDetection(feature, detector);
+				turn();
 			}
 		});
 	}
@@ -170,7 +197,7 @@ public class Robot {
 			@Override
 			public void featureDetected(Feature feature,
 					FeatureDetector detector) {
-				// Add code here
+					moveBackward();
 			}
 		});
 	}
