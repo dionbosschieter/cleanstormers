@@ -1,13 +1,12 @@
 package org.saseros.cleanstorms;
 
 import lejos.nxt.I2CSensor;
-import lejos.robotics.subsumption.Behavior;
 
 public class UltraSonicCheck implements Runnable {
 	
 	private I2CSensor us;
 	private int seconds;
-	private float LOW_LEVEL;
+	private float lowLevel;
 	
 	/**
 	 * Constructor for initializing the private variables 
@@ -15,10 +14,10 @@ public class UltraSonicCheck implements Runnable {
 	 * @param us
 	 * @param seconds
 	 */
-	UltraSonicCheck(I2CSensor us, int seconds, float lowlevel) {
+	UltraSonicCheck(I2CSensor us, int seconds, float lowLevel) {
 		this.us = us;
 		this.seconds = seconds;
-		this.LOW_LEVEL = lowlevel;
+		this.lowLevel = lowLevel;
 	}
 	
 	/**
@@ -28,6 +27,8 @@ public class UltraSonicCheck implements Runnable {
 		while(sleep()) {
 			if(!SystemCheck.checkSensor(us)) 
 				Alarm.createAlarmHard("UltraSonic sensor not Connected");
+			if(!SystemCheck.checkBatteryLevel(lowLevel))
+				Alarm.createAlarmHard("Batterylevel to low");
 		}
 	}
 	

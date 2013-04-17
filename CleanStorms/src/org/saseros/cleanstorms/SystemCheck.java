@@ -63,12 +63,24 @@ public class SystemCheck {
 	 */
 	public static boolean checkSensor(I2CSensor us) {
 		return (us.getData(0, null, 0) != -5);
-	}	
+	}
+	
+	/**
+	 * Check if the battery voltage level is
+	 * above the low voltage value;
+	 * 
+	 * @param	lowLevel
+	 * @return	Returns true if the batterylevel 
+	 * 			is not below the given low value;
+	 */
+	public static boolean checkBatteryLevel(float lowLevel) {
+		return (Battery.getVoltage() > lowLevel);
+	}
 	
 	/**
 	 * Checks if all of the motors are connected 
 	 */
-	public static void enginesCheck() {
+	private static void enginesCheck() {
 		if(!motorCheck(Motor.A))
 			Alarm.createAlarmHard("Motor A not working!");
 		if(!motorCheck(Motor.B))
@@ -80,7 +92,7 @@ public class SystemCheck {
 	/**
 	 * Check if all sensors are connected
 	 */
-	public static void sensorCheck() {
+	private static void sensorCheck() {
 		//defining and initializing all of the sensorinfo's
 		I2CSensor us = new I2CSensor(SensorPort.S1);
 		TouchSensor t = new TouchSensor(SensorPort.S2);
@@ -110,5 +122,6 @@ public class SystemCheck {
 	public static void main(String[] args) {
 		enginesCheck();
 		sensorCheck();
+		checkBatteryLevel(6.5f);
 	}
 }
