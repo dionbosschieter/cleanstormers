@@ -92,11 +92,15 @@ public class Sensor {
 		}
 	}
 
-	public RangeFinder getUltrasonicSensor() {
+	public UltrasonicSensor getUltrasonicSensor() {
 		return uss;
 	}
 
 	public int getReactonDistanceHori() {
 		return reactionDistanceHori;
+	}
+
+	public TouchSensor getTouchSensor() {
+		return ts;
 	}
 }
