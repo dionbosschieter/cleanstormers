@@ -11,9 +11,10 @@ public class Alarm {
 
 	/**
 	 * Print string on the screen and play a beep
-	 * without waiting for someone pushing the button.
+	 * And waiting for someone pushing the button.
 	 * 
 	 * @param error
+	 *            String that will be written out on the screen
 	 */
 	public static void createAlarmSoft(String error) {
 		LCD.clear();
@@ -27,7 +28,9 @@ public class Alarm {
 	 * And wait for a button to be pressed. 
 	 * 
 	 * @param error
+	 *            String that will be written out on the screen
 	 * @param robot
+	 *            Robot object, for stopping the motors.
 	 */
 	public static void createAlarmHard(String error, Robot robot) {
 		Robot.safeState = true;
@@ -48,6 +51,7 @@ public class Alarm {
 	 * Show a message on the screen
 	 * 
 	 * @param error
+	 *            String that will be written out on the screen
 	 */
 	public static void showMessage(String error) {
 		LCD.clear();
