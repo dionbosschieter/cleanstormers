@@ -1,12 +1,13 @@
 package org.saseros.cleanstorms;
 
-import lejos.nxt.I2CSensor;
+import lejos.nxt.*;
 
-public class UltraSonicCheck implements Runnable {
+public class ContinousCheck extends Thread {
 	
 	private I2CSensor us;
 	private int seconds;
 	private float lowLevel;
+	private Robot robot;
 	
 	/**
 	 * Constructor for initializing the private variables 
@@ -14,10 +15,11 @@ public class UltraSonicCheck implements Runnable {
 	 * @param us
 	 * @param seconds
 	 */
-	UltraSonicCheck(I2CSensor us, int seconds, float lowLevel) {
-		this.us = us;
+	public ContinousCheck(SensorPort ussPort, int seconds, float lowLevel, Robot robot) {
+		this.us = new I2CSensor(ussPort);;
 		this.seconds = seconds;
 		this.lowLevel = lowLevel;
+		this.robot = robot;
 	}
 	
 	/**
@@ -26,9 +28,9 @@ public class UltraSonicCheck implements Runnable {
 	public void run() {
 		while(sleep()) {
 			if(!SystemCheck.checkSensor(us)) 
-				Alarm.createAlarmHard("UltraSonic sensor not Connected");
+				Alarm.createAlarmHard("UltraSonic sensor not Connected", robot);
 			if(!SystemCheck.checkBatteryLevel(lowLevel))
-				Alarm.createAlarmHard("Batterylevel to low");
+				Alarm.createAlarmHard("Batterylevel to low", robot);
 		}
 	}
 	

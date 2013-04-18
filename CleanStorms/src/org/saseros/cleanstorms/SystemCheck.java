@@ -4,6 +4,31 @@ import lejos.nxt.*;
 
 public class SystemCheck {
 	
+	private SensorPort tPort;
+	private SensorPort lsPort;
+	private SensorPort ussPort;
+	private float lowLevel;
+	
+	/**
+	 * Sets the ports to use and low battery level threshold.
+	 * 
+	 * @param tPort
+	 *            Port for the Touch sensor.
+	 * @param lsPort
+	 *            Port for the Light sensor.
+	 * @param ussPort
+	 *            Port for the Ultra sonic sensor.
+	 * @param lowLevel
+	 *            Low battery level threshold for battery checking.
+	 */
+	public SystemCheck(SensorPort ussPort, SensorPort tPort,
+			SensorPort lsPort, float lowLevel) {
+		this.tPort = tPort;
+		this.lsPort = lsPort;
+		this.ussPort = ussPort;
+		this.lowLevel = lowLevel;
+	}
+	
 	/**
 	 * Checks if motor is available and can move.
 	 * 
@@ -33,7 +58,7 @@ public class SystemCheck {
 	}
 	
 	/**
-	 * Check if Touch sensor is connected
+	 * Check if Touch sensor is connected.
 	 * 
 	 * @param	t
 	 * @return	Returns true if the Touchsensor is pressed.
@@ -43,7 +68,7 @@ public class SystemCheck {
 	}
 	
 	/**
-	 * Check if Light sensor is connected
+	 * Check if Light sensor is connected.
 	 * 
 	 * @param	ls
 	 * @return	Returns true if the sensor is connected
@@ -55,19 +80,19 @@ public class SystemCheck {
 	}
 	
 	/**
-	 * Check if Ultra Sonic sensor is connected
+	 * Check if Ultra Sonic sensor is connected.
 	 * 	
 	 * @param	us
 	 * @return	Returns true if the sensor is connected
  	 *			-5 means disconnected.
 	 */
-	public static boolean checkSensor(I2CSensor us) {
-		return (us.getData(0, null, 0) != -5);
+	public static boolean checkSensor(I2CSensor uss) {
+		return (uss.getData(0, null, 0) != -5);
 	}
 	
 	/**
 	 * Check if the battery voltage level is
-	 * above the low voltage value;
+	 * above the low voltage value.
 	 * 
 	 * @param	lowLevel
 	 * @return	Returns true if the batterylevel 
@@ -81,47 +106,67 @@ public class SystemCheck {
 	 * Checks if all of the motors are connected 
 	 */
 	private static void enginesCheck() {
-		if(!motorCheck(Motor.A))
-			Alarm.createAlarmHard("Motor A not working!");
-		if(!motorCheck(Motor.B))
-			Alarm.createAlarmHard("Motor B not working!");
-		if(!motorCheck(Motor.C))
-			Alarm.createAlarmHard("Motor C not working!");
+		boolean ret = true;
+		while(ret) {
+			ret = false;
+			
+			if(!motorCheck(Motor.A)) {
+				Alarm.createAlarmSoft("Motor A not working!");
+				ret = true;
+			}
+			if(!motorCheck(Motor.B)) {
+				Alarm.createAlarmSoft("Motor B not working!");
+				ret = true;
+			}
+			if(!motorCheck(Motor.C)) {
+				Alarm.createAlarmSoft("Motor C not working!");
+				ret = true;
+			}
+		}
 	}
 	
 	/**
 	 * Check if all sensors are connected
 	 */
-	private static void sensorCheck() {
-		//defining and initializing all of the sensorinfo's
-		I2CSensor us = new I2CSensor(SensorPort.S1);
-		TouchSensor t = new TouchSensor(SensorPort.S2);
-		LightSensor ls = new LightSensor(SensorPort.S3);
-		
-		if(!checkSensor(us)) 
-			Alarm.createAlarmHard("UltraSonic sensor not Connected");
-		
-		//give an message to the user, to preform some sensor tests
-		Alarm.showMessage("Please push the Touchsensor and hold" +
-				" hold that while you pressed the Orange button.");
-		
-		if(!checkSensor(t))
-			Alarm.createAlarmHard("Touch Sensor not connected!");
-		if(!checkSensor(ls))
-			Alarm.createAlarmHard("Light Sensor not connected!");
-		
-		Alarm.showMessage("You can now release the Touch sensor" +
-				" and pres the orange button again.");
+	private void sensorCheck() {
+		boolean ret = true;
+		while(ret) {
+			ret = false;
+			//defining and initializing all of the sensorinfo's
+			I2CSensor uss = new I2CSensor(ussPort);
+			TouchSensor t = new TouchSensor(tPort);
+			LightSensor ls = new LightSensor(lsPort);
+			
+			if(!checkSensor(uss)) {
+				Alarm.createAlarmSoft("UltraSonic sensor not Connected");
+				ret = true;
+			}
+			//give an message to the user, to preform some sensor tests
+			Alarm.showMessage("Please push the Touchsensor and hold" +
+					" hold that while you pressed the Orange button.");
+			
+			if(!checkSensor(t)) {
+				Alarm.createAlarmSoft("Touch Sensor not connected!");
+				ret = true;
+			}
+			if(!checkSensor(ls)) {
+				Alarm.createAlarmSoft("Light Sensor not connected!");
+				ret = true;
+			}
+			Alarm.showMessage("You can now release the Touch sensor" +
+					" and pres the orange button again.");
+		}
 	}
 	
 	/**
-	 * <b>Intented for testing purposes only</b>
-	 * 
-	 * @param args
+	 * Preform all of the tests, first do a engine
+	 * check next the sensor check and check the
+	 * battery after that.
 	 */
-	public static void main(String[] args) {
+	public void preform() {
 		enginesCheck();
 		sensorCheck();
-		checkBatteryLevel(6.5f);
+		if(!checkBatteryLevel(lowLevel))
+			Alarm.createAlarmSoft("Batterylevel to low");
 	}
 }
