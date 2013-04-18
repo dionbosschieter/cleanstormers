@@ -98,7 +98,7 @@ public class Sensor {
 	 *         around.
 	 */
 	public boolean isGroundValid() {
-		if (ls.readValue() > (reactionDistanceVerti-2) && ls.readValue() < (reactionDistanceVerti+2)) {
+		if (ls.readValue() > (reactionDistanceVerti-5) && ls.readValue() < (reactionDistanceVerti+5)) {
 			return true;
 		}
 		return false;

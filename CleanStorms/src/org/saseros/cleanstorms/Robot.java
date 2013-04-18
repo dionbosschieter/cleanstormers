@@ -30,7 +30,7 @@ public class Robot {
 	private int turn = -15;
 	private int recursiveDepth = 0;
 
-	private final int RESPONSE_TIME_ULTRASONIC = 500;
+	private final int RESPONSE_TIME_ULTRASONIC = 800;
 	public static boolean safeState = false;
 
 	/**
@@ -55,7 +55,7 @@ public class Robot {
 		this.random = new Random();
 
 		pilot.setMinRadius(15); // Radius for turns
-		initiateUltrasonicHeadMotor();
+//		initiateUltrasonicHeadMotor();
 	}
 
 	public boolean moveBackward() {
@@ -64,14 +64,16 @@ public class Robot {
 		Alarm.playBeep();
 
 		this.getPilot().backward();
+		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		this.getPilot().rotate(90 + (int) (Math.random() * ((180 - 90) + 1)));
+		this.getPilot().arc(0, 90 + (int) (Math.random() * ((180 - 90) + 1)));
+		
 		this.getPilot().forward();
 
 		return true;
@@ -191,6 +193,7 @@ public class Robot {
 			public void featureDetected(Feature feature,
 					FeatureDetector detector) {
 				turn();
+				
 			}
 		});
 	}

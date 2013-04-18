@@ -34,13 +34,7 @@ public class Main {
 
 			while (robot.getPilot().isMoving()) {
 				if(!robot.getSensor().isGroundValid()){
-					robot.getPilot().stop();
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					robot.moveBackward();
 				}
 
 //				
@@ -60,10 +54,12 @@ public class Main {
 				SensorPort.S2, SensorPort.S3, 6.5f);
 		syscheck.preform();
 		
+		
 		WarningLight wLight = new WarningLight(2);
 		wLight.start();
 		
 		Sensor sensor = new Sensor(true, 80, 40);
+		sensor.calibrateLight();
 
 		DifferentialPilot pilot = new DifferentialPilot(5.6F, 5.6F, 14F,
 				Motor.A, Motor.C, false);
