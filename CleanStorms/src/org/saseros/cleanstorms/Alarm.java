@@ -2,6 +2,11 @@ package org.saseros.cleanstorms;
 
 import lejos.nxt.*;
 
+/**
+ * 
+ * @author Pers
+ *
+ */
 public class Alarm {
 
 	/**
@@ -22,6 +27,7 @@ public class Alarm {
 	 * And wait for a button to be pressed. 
 	 * 
 	 * @param error
+	 * @param robot
 	 */
 	public static void createAlarmHard(String error, Robot robot) {
 		Robot.safeState = true;
