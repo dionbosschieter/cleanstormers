@@ -106,12 +106,23 @@ public class SystemCheck {
 	 * Checks if all of the motors are connected 
 	 */
 	private static void enginesCheck() {
-		if(!motorCheck(Motor.A))
-			Alarm.createAlarmSoft("Motor A not working!");
-		if(!motorCheck(Motor.B))
-			Alarm.createAlarmSoft("Motor B not working!");
-		if(!motorCheck(Motor.C))
-			Alarm.createAlarmSoft("Motor C not working!");
+		boolean ret = true;
+		while(ret) {
+			ret = false;
+			
+			if(!motorCheck(Motor.A)) {
+				Alarm.createAlarmSoft("Motor A not working!");
+				ret = true;
+			}
+			if(!motorCheck(Motor.B)) {
+				Alarm.createAlarmSoft("Motor B not working!");
+				ret = true;
+			}
+			if(!motorCheck(Motor.C)) {
+				Alarm.createAlarmSoft("Motor C not working!");
+				ret = true;
+			}
+		}
 	}
 	
 	/**
