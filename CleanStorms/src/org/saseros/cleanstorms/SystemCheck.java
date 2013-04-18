@@ -118,25 +118,33 @@ public class SystemCheck {
 	 * Check if all sensors are connected
 	 */
 	private void sensorCheck() {
-		//defining and initializing all of the sensorinfo's
-		I2CSensor uss = new I2CSensor(ussPort);
-		TouchSensor t = new TouchSensor(tPort);
-		LightSensor ls = new LightSensor(lsPort);
-		
-		if(!checkSensor(uss)) 
-			Alarm.createAlarmSoft("UltraSonic sensor not Connected");
-		
-		//give an message to the user, to preform some sensor tests
-		Alarm.showMessage("Please push the Touchsensor and hold" +
-				" hold that while you pressed the Orange button.");
-		
-		if(!checkSensor(t))
-			Alarm.createAlarmSoft("Touch Sensor not connected!");
-		if(!checkSensor(ls))
-			Alarm.createAlarmSoft("Light Sensor not connected!");
-		
-		Alarm.showMessage("You can now release the Touch sensor" +
-				" and pres the orange button again.");
+		boolean ret = true;
+		while(ret) {
+			ret = false;
+			//defining and initializing all of the sensorinfo's
+			I2CSensor uss = new I2CSensor(ussPort);
+			TouchSensor t = new TouchSensor(tPort);
+			LightSensor ls = new LightSensor(lsPort);
+			
+			if(!checkSensor(uss)) {
+				Alarm.createAlarmSoft("UltraSonic sensor not Connected");
+				ret = true;
+			}
+			//give an message to the user, to preform some sensor tests
+			Alarm.showMessage("Please push the Touchsensor and hold" +
+					" hold that while you pressed the Orange button.");
+			
+			if(!checkSensor(t)) {
+				Alarm.createAlarmSoft("Touch Sensor not connected!");
+				ret = true;
+			}
+			if(!checkSensor(ls)) {
+				Alarm.createAlarmSoft("Light Sensor not connected!");
+				ret = true;
+			}
+			Alarm.showMessage("You can now release the Touch sensor" +
+					" and pres the orange button again.");
+		}
 	}
 	
 	/**
