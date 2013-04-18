@@ -11,7 +11,7 @@ import lejos.nxt.Motor;
 public class UltrasonicHeadMover extends Thread {
 
 	private final int turningDegree = 45;
-	private boolean check = true;
+	private int check = 0;
 
 	/**
 	 * The code that should be executed once the thread has been initiated
@@ -20,10 +20,12 @@ public class UltrasonicHeadMover extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				if (check) {
-					executeHeadTurn(turningDegree);
-				} else {
+				if (check == 0) {
 					executeHeadTurn(-turningDegree);
+				} else if (check == 1) {
+					executeHeadTurn(0);
+				} else {
+					executeHeadTurn(turningDegree);
 				}
 				Thread.sleep(1000);
 			} catch (InterruptedException ie) {
@@ -40,6 +42,10 @@ public class UltrasonicHeadMover extends Thread {
 	 */
 	private void executeHeadTurn(int rotation) {
 		Motor.B.rotateTo(rotation);
-		this.check = !check;
+		if (check <= 2) {
+			check++;
+		} else {
+			this.check = 0;
+		}
 	}
 }

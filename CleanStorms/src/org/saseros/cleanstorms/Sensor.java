@@ -98,18 +98,21 @@ public class Sensor {
 	 *         around.
 	 */
 	public boolean isGroundValid() {
-		if (ls.readValue() > reactionDistanceVerti) {
+		if (ls.readValue() > (reactionDistanceVerti-2) && ls.readValue() < (reactionDistanceVerti+2)) {
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Intended for light-calibration, will be implemented if needed
+	 * Intended for light-calibration
+	 * You need to initiate this class first
 	 */
-	// public void calibrateLight(){
-	//
-	// }
+	public void calibrateLight(){
+		Alarm.showMessage("Put the robot on the floor");
+		reactionDistanceVerti = ls.readValue();		
+		Alarm.createAlarmSoft("Calibrated");	
+	}
 
 	/**
 	 * <b>Intented for testing purposes only</b>
