@@ -21,8 +21,8 @@ public class SystemCheck {
 	 * @param lowLevel
 	 *            Low battery level threshold for battery checking.
 	 */
-	public SystemCheck(SensorPort tPort, SensorPort lsPort,
-			SensorPort ussPort, float lowLevel) {
+	public SystemCheck(SensorPort ussPort, SensorPort tPort,
+			SensorPort lsPort, float lowLevel) {
 		this.tPort = tPort;
 		this.lsPort = lsPort;
 		this.ussPort = ussPort;

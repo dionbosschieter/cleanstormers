@@ -1,8 +1,8 @@
 package org.saseros.cleanstorms;
 
-import lejos.nxt.I2CSensor;
+import lejos.nxt.*;
 
-public class ContinousCheck implements Runnable {
+public class ContinousCheck extends Thread {
 	
 	private I2CSensor us;
 	private int seconds;
@@ -14,8 +14,8 @@ public class ContinousCheck implements Runnable {
 	 * @param us
 	 * @param seconds
 	 */
-	public ContinousCheck(I2CSensor us, int seconds, float lowLevel) {
-		this.us = us;
+	public ContinousCheck(SensorPort ussPort, int seconds, float lowLevel) {
+		this.us = new I2CSensor(ussPort);;
 		this.seconds = seconds;
 		this.lowLevel = lowLevel;
 	}

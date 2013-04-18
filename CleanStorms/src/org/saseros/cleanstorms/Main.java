@@ -54,6 +54,18 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		SystemCheck syscheck = new SystemCheck(SensorPort.S1, 
+				SensorPort.S2, SensorPort.S3, 6.5f);
+		syscheck.preform();
+		
+		ContinousCheck cCheck = new ContinousCheck(SensorPort.S1,
+				2, 6.5f);
+		cCheck.start();
+		
+		WarningLight wLight = new WarningLight(2);
+		wLight.start();
+		
 		Sensor sensor = new Sensor(true, 60, 40);
 
 		DifferentialPilot pilot = new DifferentialPilot(5.6F, 5.6F, 14F,
@@ -66,7 +78,6 @@ public class Main {
 		navigator.getPoseProvider().getPose().setLocation(0, 0);
 
 		Main main = new Main(robot);
-
 	}
 
 }
