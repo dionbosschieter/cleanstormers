@@ -2,7 +2,7 @@ package org.saseros.cleanstorms;
 
 import lejos.nxt.I2CSensor;
 
-public class UltraSonicCheck implements Runnable {
+public class ContinousCheck implements Runnable {
 	
 	private I2CSensor us;
 	private int seconds;
@@ -14,7 +14,7 @@ public class UltraSonicCheck implements Runnable {
 	 * @param us
 	 * @param seconds
 	 */
-	UltraSonicCheck(I2CSensor us, int seconds, float lowLevel) {
+	public ContinousCheck(I2CSensor us, int seconds, float lowLevel) {
 		this.us = us;
 		this.seconds = seconds;
 		this.lowLevel = lowLevel;
