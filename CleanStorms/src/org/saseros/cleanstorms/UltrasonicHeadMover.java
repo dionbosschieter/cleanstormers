@@ -26,7 +26,7 @@ public class UltrasonicHeadMover extends Thread {
 					if (check) {
 						executeHeadTurn(turningDegree);
 					} else {
-						executeHeadTurn(turningDegree);
+						executeHeadTurn(-turningDegree);
 					}
 				}
 				Thread.sleep(1000);
