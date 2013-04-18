@@ -107,11 +107,11 @@ public class SystemCheck {
 	 */
 	private static void enginesCheck() {
 		if(!motorCheck(Motor.A))
-			Alarm.createAlarmHard("Motor A not working!");
+			Alarm.createAlarmSoft("Motor A not working!");
 		if(!motorCheck(Motor.B))
-			Alarm.createAlarmHard("Motor B not working!");
+			Alarm.createAlarmSoft("Motor B not working!");
 		if(!motorCheck(Motor.C))
-			Alarm.createAlarmHard("Motor C not working!");
+			Alarm.createAlarmSoft("Motor C not working!");
 	}
 	
 	/**
@@ -124,16 +124,16 @@ public class SystemCheck {
 		LightSensor ls = new LightSensor(lsPort);
 		
 		if(!checkSensor(uss)) 
-			Alarm.createAlarmHard("UltraSonic sensor not Connected");
+			Alarm.createAlarmSoft("UltraSonic sensor not Connected");
 		
 		//give an message to the user, to preform some sensor tests
 		Alarm.showMessage("Please push the Touchsensor and hold" +
 				" hold that while you pressed the Orange button.");
 		
 		if(!checkSensor(t))
-			Alarm.createAlarmHard("Touch Sensor not connected!");
+			Alarm.createAlarmSoft("Touch Sensor not connected!");
 		if(!checkSensor(ls))
-			Alarm.createAlarmHard("Light Sensor not connected!");
+			Alarm.createAlarmSoft("Light Sensor not connected!");
 		
 		Alarm.showMessage("You can now release the Touch sensor" +
 				" and pres the orange button again.");
@@ -148,6 +148,6 @@ public class SystemCheck {
 		enginesCheck();
 		sensorCheck();
 		if(!checkBatteryLevel(lowLevel))
-			Alarm.createAlarmHard("Batterylevel to low");
+			Alarm.createAlarmSoft("Batterylevel to low");
 	}
 }
