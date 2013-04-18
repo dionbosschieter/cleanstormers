@@ -2,6 +2,11 @@ package org.saseros.cleanstorms;
 
 import lejos.nxt.*;
 
+/**
+ * 
+ * @author Pers
+ *
+ */
 public class ContinousCheck extends Thread {
 	
 	private I2CSensor us;
@@ -15,11 +20,16 @@ public class ContinousCheck extends Thread {
 	 * @param ussPort
 	 *            UltraSonic sensor port
 	 * @param seconds
+<<<<<<< HEAD
 	 *            seconds to sleep in the while loop
 	 * @param lowLevel
 	 *            Battery low level threshold
 	 * @param robot
 	 *            Robot object, for the stopping of the motors.
+=======
+	 * @lowLevel
+	 * @param robot
+>>>>>>> branch 'master' of https://github.com/dionbosschieter/cleanstormers.git
 	 */
 	public ContinousCheck(SensorPort ussPort, int seconds, float lowLevel, Robot robot) {
 		this.us = new I2CSensor(ussPort);;

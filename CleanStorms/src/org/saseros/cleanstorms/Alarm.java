@@ -2,6 +2,11 @@ package org.saseros.cleanstorms;
 
 import lejos.nxt.*;
 
+/**
+ * 
+ * @author Pers
+ *
+ */
 public class Alarm {
 
 	/**
