@@ -18,16 +18,17 @@ public class UltrasonicHeadMover extends Thread {
 	 */
 	@Override
 	public void run() {
-		System.out.println("Test");
-		try {
-			if (check) {
-				executeHeadTurn(turningDegree);
-			} else {
-				executeHeadTurn(-turningDegree);
+		while (true) {
+			try {
+				if (check) {
+					executeHeadTurn(turningDegree);
+				} else {
+					executeHeadTurn(-turningDegree);
+				}
+				Thread.sleep(1000);
+			} catch (InterruptedException ie) {
+				System.out.println("Thread turning Ultrasonic head failed");
 			}
-			Thread.sleep(1000);
-		} catch (InterruptedException ie) {
-			System.out.println("Thread turning Ultrasonic head failed");
 		}
 	}
 

@@ -26,13 +26,11 @@ public class Robot {
 	private RangeFeatureDetector fd;
 	private TouchFeatureDetector tfd;
 	private Random random;
-	private Alarm alarm;
 
 	private int turn = -15;
 	private int recursiveDepth = 0;
 
 	private final int RESPONSE_TIME_ULTRASONIC = 700;
-	private final UltrasonicHeadMover mover = new UltrasonicHeadMover();
 
 	/**
 	 * The constructor sets the sensors, events, and various variables used by
@@ -55,16 +53,13 @@ public class Robot {
 		addTouchSensorListener();
 		this.random = new Random();
 
-		this.alarm = new Alarm();
-
-		mover.setDaemon(true);
 		pilot.setMinRadius(15); // Radius for turns
-
+		initiateUltrasonicHeadMotor();
 	}
 
 	public boolean moveBackward() {
 
-		alarm.playBeep();
+		Alarm.playBeep();
 
 		this.getPilot().backward();
 		try {
@@ -88,9 +83,10 @@ public class Robot {
 	/**
 	 * Initiates the moving of the Ultrasonic Sensor
 	 * 
-	 * @deprecated
 	 */
 	public void initiateUltrasonicHeadMotor() {
+		UltrasonicHeadMover mover = new UltrasonicHeadMover();
+		mover.setDaemon(true);
 		mover.start();
 	}
 
@@ -214,6 +210,7 @@ public class Robot {
 	/**
 	 * A help-method to generate the radius the robot moves in by a coin-flip
 	 * 
+	 * @deprecated
 	 * @return 15.0 or -15.0 depending on the outcome of the coinflip
 	 */
 	private double generateRadius() {
