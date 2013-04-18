@@ -105,12 +105,13 @@ public class Sensor {
 	}
 
 	/**
-	 * Intended for light-calibration, will be implemented if needed
+	 * Intended for light-calibration
+	 * You need to initiate this class first
 	 */
 	public void calibrateLight(){
-		Alarm.showMessage("Put the Robot on the floor");
-		reactionDistanceVerti = ls.readValue();
-		
+		Alarm.showMessage("Put the robot on the floor");
+		reactionDistanceVerti = ls.readValue();		
+		Alarm.createAlarmSoft("Calibrated");	
 	}
 
 	/**
