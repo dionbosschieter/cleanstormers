@@ -34,7 +34,7 @@ public class LightReader implements Runnable  {
 		@Override
 		public void run() {
 			while(sleep()){
-				if(lightReadLine())
+				if(lightReadLine()){}
 					//put here the turning sequence
 			}		
 		}
