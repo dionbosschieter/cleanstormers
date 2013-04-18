@@ -32,13 +32,17 @@ public class Main {
 			robot.getPilot().forward();
 
 			while (robot.getPilot().isMoving()) {
+				if(!robot.getSensor().isGroundValid()){
+					robot.getPilot().stop();
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 
-//				if (robot.getSensor().isBumpDetected()) {
-//					// Move backward routine
-//					robot.moveBackward();
-//					break;
-//
-//				}
+//				
 
 			}
 		}
@@ -50,7 +54,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Sensor sensor = new Sensor(true, 60, 30);
+		Sensor sensor = new Sensor(true, 60, 40);
 
 		DifferentialPilot pilot = new DifferentialPilot(5.6F, 5.6F, 14F,
 				Motor.A, Motor.C, false);
