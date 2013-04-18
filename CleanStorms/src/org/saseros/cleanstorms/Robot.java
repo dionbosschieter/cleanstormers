@@ -32,6 +32,7 @@ public class Robot {
 	private int recursiveDepth = 0;
 
 	private final int RESPONSE_TIME_ULTRASONIC = 700;
+	private final UltrasonicHeadMover mover = new UltrasonicHeadMover();
 
 	/**
 	 * The constructor sets the sensors, events, and various variables used by
@@ -53,17 +54,18 @@ public class Robot {
 		this.tfd = new TouchFeatureDetector(sensor.getTouchSensor());
 		addTouchSensorListener();
 		this.random = new Random();
-		
+
 		this.alarm = new Alarm();
 
+		mover.setDaemon(true);
 		pilot.setMinRadius(15); // Radius for turns
 
 	}
-	
-	public boolean moveBackward(){
-		
+
+	public boolean moveBackward() {
+
 		alarm.playBeep();
-		
+
 		this.getPilot().backward();
 		try {
 			Thread.sleep(1000);
@@ -72,17 +74,45 @@ public class Robot {
 			e.printStackTrace();
 		}
 
-		this.getPilot().rotate(
-				90 + (int) (Math.random() * ((180 - 90) + 1)));
+		this.getPilot().rotate(90 + (int) (Math.random() * ((180 - 90) + 1)));
 		this.getPilot().forward();
-		
+
 		return true;
 	}
-	
-	public boolean turn(){
-		this.getPilot().arc(15,
-				20 + (int) (Math.random() * ((90 - 20) + 1)));
+
+	public boolean turn() {
+		this.getPilot().arc(15, 20 + (int) (Math.random() * ((90 - 20) + 1)));
 		return true;
+	}
+
+	/**
+	 * Initiates the moving of the Ultrasonic Sensor
+	 * 
+	 * @deprecated
+	 */
+	public void initiateUltrasonicHeadMotor() {
+		mover.start();
+	}
+
+	/**
+	 * @return the pilot
+	 */
+	public DifferentialPilot getPilot() {
+		return pilot;
+	}
+
+	/**
+	 * @return the navigator
+	 */
+	public Navigator getNavigator() {
+		return navigator;
+	}
+
+	/**
+	 * @return the sensor
+	 */
+	public Sensor getSensor() {
+		return sensor;
 	}
 
 	/**
@@ -139,27 +169,6 @@ public class Robot {
 	}
 
 	/**
-	 * @return the pilot
-	 */
-	public DifferentialPilot getPilot() {
-		return pilot;
-	}
-
-	/**
-	 * @return the navigator
-	 */
-	public Navigator getNavigator() {
-		return navigator;
-	}
-
-	/**
-	 * @return the sensor
-	 */
-	public Sensor getSensor() {
-		return sensor;
-	}
-
-	/**
 	 * In this method goes code that is suppeosed to executed when the
 	 * UltrasonicSensor detecs an obstacle
 	 * 
@@ -170,10 +179,10 @@ public class Robot {
 	 *            Default value that must be implemented, not really usedfor
 	 *            anything
 	 */
-//	private void handleOnUltrasonicDetection(Feature feature,
-//			FeatureDetector detector) {
-//		System.out.println("It works!");
-//	}
+	// private void handleOnUltrasonicDetection(Feature feature,
+	// FeatureDetector detector) {
+	// System.out.println("It works!");
+	// }
 
 	/**
 	 * Used in the constructor to add an Event to the UltrasonicSensor
@@ -197,7 +206,7 @@ public class Robot {
 			@Override
 			public void featureDetected(Feature feature,
 					FeatureDetector detector) {
-					moveBackward();
+				moveBackward();
 			}
 		});
 	}
