@@ -13,7 +13,8 @@ public class Alarm {
 	public static void createAlarmSoft(String error) {
 		LCD.clear();
 		System.out.println(error);
-		playBeep();
+		playAlarm();
+		Button.waitForAnyPress();
 	}
 	
 	/**
@@ -22,12 +23,19 @@ public class Alarm {
 	 * 
 	 * @param error
 	 */
-	public static void createAlarmHard(String error) {
+	public static void createAlarmHard(String error, Robot robot) {
+		Robot.safeState = true;
+		robot.getPilot().stop();
+		
 		LCD.clear();
 		System.out.println(error);
 		playAlarm();
 		Button.waitForAnyPress();
 		
+		SystemCheck syscheck = new SystemCheck(SensorPort.S1, 
+				SensorPort.S2, SensorPort.S3, 6.5f);
+		syscheck.preform();
+		Robot.safeState = false;
 	}
 	
 	/**

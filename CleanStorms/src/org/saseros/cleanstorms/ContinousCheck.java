@@ -7,6 +7,7 @@ public class ContinousCheck extends Thread {
 	private I2CSensor us;
 	private int seconds;
 	private float lowLevel;
+	private Robot robot;
 	
 	/**
 	 * Constructor for initializing the private variables 
@@ -14,10 +15,11 @@ public class ContinousCheck extends Thread {
 	 * @param us
 	 * @param seconds
 	 */
-	public ContinousCheck(SensorPort ussPort, int seconds, float lowLevel) {
+	public ContinousCheck(SensorPort ussPort, int seconds, float lowLevel, Robot robot) {
 		this.us = new I2CSensor(ussPort);;
 		this.seconds = seconds;
 		this.lowLevel = lowLevel;
+		this.robot = robot;
 	}
 	
 	/**
@@ -26,9 +28,9 @@ public class ContinousCheck extends Thread {
 	public void run() {
 		while(sleep()) {
 			if(!SystemCheck.checkSensor(us)) 
-				Alarm.createAlarmHard("UltraSonic sensor not Connected");
+				Alarm.createAlarmHard("UltraSonic sensor not Connected", robot);
 			if(!SystemCheck.checkBatteryLevel(lowLevel))
-				Alarm.createAlarmHard("Batterylevel to low");
+				Alarm.createAlarmHard("Batterylevel to low", robot);
 		}
 	}
 	

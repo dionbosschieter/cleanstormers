@@ -30,7 +30,8 @@ public class Robot {
 	private int turn = -15;
 	private int recursiveDepth = 0;
 
-	private final int RESPONSE_TIME_ULTRASONIC = 700;
+	private final int RESPONSE_TIME_ULTRASONIC = 500;
+	public static boolean safeState = false;
 
 	/**
 	 * The constructor sets the sensors, events, and various variables used by
@@ -58,7 +59,8 @@ public class Robot {
 	}
 
 	public boolean moveBackward() {
-
+		if(safeState) return false;
+		
 		Alarm.playBeep();
 
 		this.getPilot().backward();
@@ -76,7 +78,7 @@ public class Robot {
 	}
 
 	public boolean turn() {
-		this.getPilot().arc(15, 20 + (int) (Math.random() * ((90 - 20) + 1)));
+		if(!safeState) this.getPilot().arc(15, 20 + (int) (Math.random() * ((90 - 20) + 1)));
 		return true;
 	}
 

@@ -29,6 +29,7 @@ public class Main {
 		this.robot = robot;
 
 		while (true) {
+			if(Robot.safeState) continue;
 			robot.getPilot().forward();
 
 			while (robot.getPilot().isMoving()) {
@@ -59,14 +60,10 @@ public class Main {
 				SensorPort.S2, SensorPort.S3, 6.5f);
 		syscheck.preform();
 		
-		ContinousCheck cCheck = new ContinousCheck(SensorPort.S1,
-				2, 6.5f);
-		cCheck.start();
-		
 		WarningLight wLight = new WarningLight(2);
 		wLight.start();
 		
-		Sensor sensor = new Sensor(true, 60, 40);
+		Sensor sensor = new Sensor(true, 80, 40);
 
 		DifferentialPilot pilot = new DifferentialPilot(5.6F, 5.6F, 14F,
 				Motor.A, Motor.C, false);
@@ -74,6 +71,10 @@ public class Main {
 		Navigator navigator = new Navigator(pilot);
 
 		Robot robot = new Robot(sensor, pilot, navigator);
+		
+		ContinousCheck cCheck = new ContinousCheck(SensorPort.S1,
+				2, 6.5f, robot);
+		cCheck.start();
 
 		navigator.getPoseProvider().getPose().setLocation(0, 0);
 
