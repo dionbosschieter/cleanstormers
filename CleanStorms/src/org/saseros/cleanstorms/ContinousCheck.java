@@ -10,10 +10,16 @@ public class ContinousCheck extends Thread {
 	private Robot robot;
 	
 	/**
-	 * Constructor for initializing the private variables 
+	 * Constructor for initializing the private variables
 	 * 
-	 * @param us
+	 * @param ussPort
+	 *            UltraSonic sensor port
 	 * @param seconds
+	 *            seconds to sleep in the while loop
+	 * @param lowLevel
+	 *            Battery low level threshold
+	 * @param robot
+	 *            Robot object, for the stopping of the motors.
 	 */
 	public ContinousCheck(SensorPort ussPort, int seconds, float lowLevel, Robot robot) {
 		this.us = new I2CSensor(ussPort);;

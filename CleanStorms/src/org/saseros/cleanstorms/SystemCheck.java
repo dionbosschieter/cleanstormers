@@ -33,6 +33,7 @@ public class SystemCheck {
 	 * Checks if motor is available and can move.
 	 * 
 	 * @param	m
+	 *            Motor to check.
 	 * @return	Returns true if the motor moves and is connected, 
 	 * 			and false if otherwise.
 	 */
@@ -61,6 +62,7 @@ public class SystemCheck {
 	 * Check if Touch sensor is connected.
 	 * 
 	 * @param	t
+	 *            TouchSensor object to check
 	 * @return	Returns true if the Touchsensor is pressed.
 	 */
 	private static boolean checkSensor(TouchSensor t) {
@@ -71,6 +73,7 @@ public class SystemCheck {
 	 * Check if Light sensor is connected.
 	 * 
 	 * @param	ls
+	 *            Light sensor object to check
 	 * @return	Returns true if the sensor is connected
  	 *			because it only has the value 0 
  	 *			if it is not connected.
@@ -83,6 +86,7 @@ public class SystemCheck {
 	 * Check if Ultra Sonic sensor is connected.
 	 * 	
 	 * @param	us
+	 *            UltraSonic sensor object to check
 	 * @return	Returns true if the sensor is connected
  	 *			-5 means disconnected.
 	 */
@@ -95,6 +99,7 @@ public class SystemCheck {
 	 * above the low voltage value.
 	 * 
 	 * @param	lowLevel
+	 *            Battery voltage level threshold
 	 * @return	Returns true if the batterylevel 
 	 * 			is not below the given low value;
 	 */
