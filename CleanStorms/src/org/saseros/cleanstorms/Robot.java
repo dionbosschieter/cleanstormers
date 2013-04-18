@@ -30,7 +30,7 @@ public class Robot {
 	private int turn = -15;
 	private int recursiveDepth = 0;
 
-	private final int RESPONSE_TIME_ULTRASONIC = 800;
+	private final int RESPONSE_TIME_ULTRASONIC = 100;
 	public static boolean safeState = false;
 
 	/**
@@ -66,13 +66,13 @@ public class Robot {
 		this.getPilot().backward();
 		
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		this.getPilot().arc(0, 90 + (int) (Math.random() * ((180 - 90) + 1)));
+		this.getPilot().rotate(90 + (int) (Math.random() * ((180 - 90) + 1)));
 		
 		this.getPilot().forward();
 

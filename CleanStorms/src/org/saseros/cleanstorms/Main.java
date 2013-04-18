@@ -58,7 +58,7 @@ public class Main {
 		WarningLight wLight = new WarningLight(2);
 		wLight.start();
 		
-		Sensor sensor = new Sensor(true, 80, 40);
+		Sensor sensor = new Sensor(true, 60, 40);
 		sensor.calibrateLight();
 
 		DifferentialPilot pilot = new DifferentialPilot(5.6F, 5.6F, 14F,
