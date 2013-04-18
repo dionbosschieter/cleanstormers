@@ -29,7 +29,7 @@ public class UltrasonicHeadMover extends Thread {
 						executeHeadTurn(-turningDegree);
 					}
 				}
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException ie) {
 				System.out.println("Thread turning Ultrasonic head failed");
 			}
