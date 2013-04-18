@@ -4,6 +4,31 @@ import lejos.nxt.*;
 
 public class SystemCheck {
 	
+	private SensorPort tPort;
+	private SensorPort lsPort;
+	private SensorPort ussPort;
+	private float lowLevel;
+	
+	/**
+	 * Sets the ports to use and low battery level threshold.
+	 * 
+	 * @param tPort
+	 *            Port for the Touch sensor.
+	 * @param lsPort
+	 *            Port for the Light sensor.
+	 * @param ussPort
+	 *            Port for the Ultra sonic sensor.
+	 * @param lowLevel
+	 *            Low battery level threshold for battery checking.
+	 */
+	public SystemCheck(SensorPort ussPort, SensorPort tPort,
+			SensorPort lsPort, float lowLevel) {
+		this.tPort = tPort;
+		this.lsPort = lsPort;
+		this.ussPort = ussPort;
+		this.lowLevel = lowLevel;
+	}
+	
 	/**
 	 * Checks if motor is available and can move.
 	 * 
@@ -33,7 +58,7 @@ public class SystemCheck {
 	}
 	
 	/**
-	 * Check if Touch sensor is connected
+	 * Check if Touch sensor is connected.
 	 * 
 	 * @param	t
 	 * @return	Returns true if the Touchsensor is pressed.
@@ -43,7 +68,7 @@ public class SystemCheck {
 	}
 	
 	/**
-	 * Check if Light sensor is connected
+	 * Check if Light sensor is connected.
 	 * 
 	 * @param	ls
 	 * @return	Returns true if the sensor is connected
@@ -55,19 +80,19 @@ public class SystemCheck {
 	}
 	
 	/**
-	 * Check if Ultra Sonic sensor is connected
+	 * Check if Ultra Sonic sensor is connected.
 	 * 	
 	 * @param	us
 	 * @return	Returns true if the sensor is connected
  	 *			-5 means disconnected.
 	 */
-	public static boolean checkSensor(I2CSensor us) {
-		return (us.getData(0, null, 0) != -5);
+	public static boolean checkSensor(I2CSensor uss) {
+		return (uss.getData(0, null, 0) != -5);
 	}
 	
 	/**
 	 * Check if the battery voltage level is
-	 * above the low voltage value;
+	 * above the low voltage value.
 	 * 
 	 * @param	lowLevel
 	 * @return	Returns true if the batterylevel 
@@ -92,13 +117,13 @@ public class SystemCheck {
 	/**
 	 * Check if all sensors are connected
 	 */
-	private static void sensorCheck() {
+	private void sensorCheck() {
 		//defining and initializing all of the sensorinfo's
-		I2CSensor us = new I2CSensor(SensorPort.S1);
-		TouchSensor t = new TouchSensor(SensorPort.S2);
-		LightSensor ls = new LightSensor(SensorPort.S3);
+		I2CSensor uss = new I2CSensor(ussPort);
+		TouchSensor t = new TouchSensor(tPort);
+		LightSensor ls = new LightSensor(lsPort);
 		
-		if(!checkSensor(us)) 
+		if(!checkSensor(uss)) 
 			Alarm.createAlarmHard("UltraSonic sensor not Connected");
 		
 		//give an message to the user, to preform some sensor tests
@@ -115,13 +140,14 @@ public class SystemCheck {
 	}
 	
 	/**
-	 * <b>Intented for testing purposes only</b>
-	 * 
-	 * @param args
+	 * Preform all of the tests, first do a engine
+	 * check next the sensor check and check the
+	 * battery after that.
 	 */
-	public static void main(String[] args) {
+	public void preform() {
 		enginesCheck();
 		sensorCheck();
-		checkBatteryLevel(6.5f);
+		if(!checkBatteryLevel(lowLevel))
+			Alarm.createAlarmHard("Batterylevel to low");
 	}
 }

@@ -1,8 +1,8 @@
-package org.saseros.cleanstorms.test;
+package org.saseros.cleanstorms;
 
 import lejos.nxt.SensorPort;
 
-public class WarningLight implements Runnable {
+public class WarningLight extends Thread {
 	
 	private int seconds;
 	
