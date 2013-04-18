@@ -16,6 +16,11 @@ public class Alarm {
 		playBeep();
 	}
 	
+	private static void stopEngines() {
+		Motor.A.stop();
+		Motor.B.stop();
+	}
+	
 	/**
 	 * Print string on the screen and play the alarm
 	 * And wait for a button to be pressed. 
@@ -23,11 +28,15 @@ public class Alarm {
 	 * @param error
 	 */
 	public static void createAlarmHard(String error) {
+		Robot.safeState = true;
+		stopEngines();
+		
 		LCD.clear();
 		System.out.println(error);
 		playAlarm();
 		Button.waitForAnyPress();
 		
+		Robot.safeState = false;
 	}
 	
 	/**
